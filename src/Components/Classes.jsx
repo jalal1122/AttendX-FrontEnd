@@ -25,7 +25,7 @@ const Classes = () => {
 
 
   return (
-    <div className={`flex flex-wrap gap-3 p-2`}>
+    <div className={`flex flex-wrap justify-start items-center w-full gap-3 p-2`}>
       {classes.map((classItem, index) => (
         <Link to={`/class/${classItem.code}`} key={index}>
           <div
