@@ -6,6 +6,8 @@ import { MdAssignmentTurnedIn } from "react-icons/md";
 const NavigationTab = ({ isMenuExtended }) => {
   const colors = useSelector((state) => state.color.colors);
 
+  const [activeTab, setActiveTab] = useState("Classes");
+
   const tabsIconSize = 28;
 
   //   Define Tab icon styles
@@ -15,12 +17,12 @@ const NavigationTab = ({ isMenuExtended }) => {
   const teacherTabs = [
     {
       name: "Classes",
-      active: true,
+      active: activeTab === "Classes",
       icon: <MdClass size={tabsIconSize} className={tabsIconStyles} />,
     },
     {
       name: "Attendance Reports",
-      active: false,
+      active: activeTab === "Attendance Reports",
       icon: (
         <MdAssignmentTurnedIn size={tabsIconSize} className={tabsIconStyles} />
       ),
@@ -31,12 +33,12 @@ const NavigationTab = ({ isMenuExtended }) => {
   const studentTabs = [
     {
       name: "Tab 4",
-      active: true,
+      active: activeTab === "Tab 4",
       icon: <MdClass size={tabsIconSize} className={tabsIconStyles} />,
     },
     {
       name: "Tab 5",
-      active: false,
+      active: activeTab === "Tab 5",
       icon: <MdClass size={tabsIconSize} className={tabsIconStyles} />,
     },
   ];
@@ -46,14 +48,26 @@ const NavigationTab = ({ isMenuExtended }) => {
 
   //   Define button styles
   const buttonsClasses =
-    "w-fit text-nowrap p-2 flex items-center justify-start gap-2 rounded-md text-semibold hover:cursor-pointer active:scale-95";
+    "w-full text-nowrap p-2 flex items-center justify-start gap-2 rounded-md text-semibold hover:cursor-pointer active:scale-95";
 
   const renderTabs = () => {
     return (
       <>
         {role === "Teacher"
           ? teacherTabs.map((tab, index) => (
-              <button key={index} className={buttonsClasses}>
+              <button
+                key={index}
+                onClick={() => {
+                  setActiveTab(tab.name);
+                }}
+                className={buttonsClasses}
+                style={{
+                  backgroundColor: tab.active
+                    ? colors.Primary
+                    : colors.Secondary,
+                  color: tab.active ? colors.Background : colors.Text.Primary,
+                }}
+              >
                 {tab?.icon && <span>{tab.icon}</span>}{" "}
                 {isMenuExtended && <span>{tab.name}</span>}
               </button>
