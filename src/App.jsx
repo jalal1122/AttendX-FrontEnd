@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import LandingPage from "./pages/LandingPage";
+import Router from "./Router/Router";
 
 function App() {
   useEffect(() => {
@@ -9,8 +9,7 @@ function App() {
 
   return (
     <>
-      <LandingPage />
-      {/* <Router /> */}
+      <Router />
     </>
   );
 }

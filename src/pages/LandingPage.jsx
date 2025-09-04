@@ -2,18 +2,20 @@ import Navbar from "../Components/Navbar/Navbar";
 import { useSelector } from "react-redux";
 import NavigationTab from "../Components/NavigationTab";
 import { useState } from "react";
+import Classes from "../Components/Classes";
 
 const LandingPage = () => {
   const { colors } = useSelector((state) => state.color);
 
   //   state for extended menu
-  const [isMenuExtended, setIsMenuExtended] = useState(false);
+  const [isMenuExtended, setIsMenuExtended] = useState(true);
 
   return (
     <div
       className="flex flex-col gap-0 min-h-screen"
       style={{
         color: colors.Text.Primary,
+        backgroundColor: colors.Background,
       }}
     >
       {/* Rendering Navbar Component */}
@@ -37,6 +39,7 @@ const LandingPage = () => {
         >
           <h1>Welcome to AttendX</h1>
           <p>Your one-stop solution for attendance management.</p>
+          <Classes />
         </div>
       </div>
     </div>
