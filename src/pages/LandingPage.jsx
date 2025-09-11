@@ -38,6 +38,7 @@ const LandingPage = () => {
           }}
         >
           <h1 className="text-5xl font-bold">Welcome to AttendX</h1>
+          
           <Classes />
         </div>
 

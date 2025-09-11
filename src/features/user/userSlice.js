@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { userService } from "./userService";
+import { userService } from "./userService.js";
 
 // Initial state for the user slice
 const initialState = {
@@ -94,7 +94,7 @@ const userSlice = createSlice({
         .addCase(registerUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
-            state.user = action.payload;
+            state.user = null
         })
         .addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false;
@@ -109,7 +109,8 @@ const userSlice = createSlice({
         .addCase(loginUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
-            state.user = action.payload;
+            state.user = action.payload.data;
+            localStorage.setItem("user", JSON.stringify(action.payload.data));
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false;
@@ -125,6 +126,7 @@ const userSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
             state.user = null;
+            localStorage.removeItem("user");
         })
         .addCase(logoutUser.rejected, (state, action) => {
             state.isLoading = false;
@@ -139,13 +141,20 @@ const userSlice = createSlice({
         .addCase(refreshAccessToken.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
-            state.user = action.payload;
+            state.user = action.payload.data;
+            localStorage.setItem("user", JSON.stringify(action.payload.data));
         })
         .addCase(refreshAccessToken.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload;
+            state.user = null;
+            localStorage.removeItem("user");
         });
     }
 
 })
+
+export const { reset } = userSlice.actions; 
+
+export default userSlice.reducer;

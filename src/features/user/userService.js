@@ -1,4 +1,4 @@
-import axios from "../utils/axiosInstance.js";
+import axios from "../../utils/axiosInstance.js";
 
 const user_EndPoint = "api/user"
 
@@ -9,13 +9,20 @@ const registerUser = async (userData) => {
     formData.append("name", userData.name)
     formData.append("email", userData.email)
     formData.append("password", userData.password)
+    formData.append("password2", userData.password2)
     formData.append("profilePicture", userData.profilePicture)
 
-    const response = await axios.post(`${user_EndPoint}/register`, formData, {
+    try{
+        const response = await axios.post(`/api/user/register`, formData, {
         headers: {}
     })
 
     return response.data
+
+    }catch(error){
+        console.log(error.response?.data?.message || "Registration failed")
+        throw error;
+    }
 }
 
 // User Login Function
@@ -46,8 +53,8 @@ const logoutUser = async () => {
     return response.data
 }
 
-// Resfrshing Access Token
-const resfreshAccesTokn = async () => {
+// Refreshing Access Token
+const refreshAccessToken = async () => {
 
     const response = await axios.post(`/refresh-Token`)
 
@@ -63,5 +70,5 @@ export const userService = {
     registerUser,
     loginUser,
     logoutUser,
-    resfreshAccesTokn
+    refreshAccessToken
 }
