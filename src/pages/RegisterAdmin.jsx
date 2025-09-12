@@ -18,7 +18,7 @@ export const RegisterAdmin = () => {
   );
   const { primaryBg, primaryText } = useSelector((state) => state.color.colors);
 
-  const { formError, setFormError } = useState(null);
+  const [formError, setFormError] = useState(null);
 
   useEffect(() => {
     if (isError) {
@@ -33,15 +33,17 @@ export const RegisterAdmin = () => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const { preview, setPreview } = useState(null);
+  const [preview, setPreview] = useState(null);
 
-  const { errors, setErrors } = useState({});
+  const [errors, setErrors] = useState({});
 
-  const { userData, setUserData } = useState({
+  const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
     password2: "",
+    role: "admin",
+    department: "",
     profilePicture: null,
   });
 
@@ -96,10 +98,12 @@ export const RegisterAdmin = () => {
         };
       }
     } else {
+      console.log(name, value);
+
       setUserData({ ...userData, [name]: value });
 
       // Clear error when user starts typing
-        setErrors({ ...errors, [name]: "" });
+      setErrors({ ...errors, [name]: "" });
     }
   };
 
@@ -115,11 +119,7 @@ export const RegisterAdmin = () => {
 
     const newErrors = {};
 
-    if (!userData.trim()) {
-      newErrors.userData = "User data is required";
-    }
-
-    if(!userData.name){
+    if (!userData.name) {
       newErrors.name = "Name is required";
     }
 
@@ -136,10 +136,16 @@ export const RegisterAdmin = () => {
       newErrors.password2 = "Passwords do not match";
     }
 
+    if (!userData.department) {
+      newErrors.department = "Department is required";
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
+
+    console.log(userData);
 
     dispatch(registerUser(userData));
   };
@@ -154,170 +160,194 @@ export const RegisterAdmin = () => {
             <FaUserShield size={30} />
           </div>
 
-         
-        {/* Form */}
-        <form onSubmit={() => submitForm(e)}>
-          {isError ? (
-            <>
-              <p className="error-message">{formError}</p>
-            </>
-          ) : (
-            <>
-              <div className="flex flex-col gap-4 w-[400px]">
-                {/* Name Div */}
-                <div className="relative nameDiv">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Enter your Full Name"
-                    className={`w-full p-2 border rounded ${
-                       errors?.name ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.name}
-                  />
-                  <FaUser
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.name && (
-                    <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                  )}
-                </div>
-
-                {/* Email Div */}
-                <div className="relative emailDiv">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your Email"
-                    className={`w-full p-2 border rounded ${
-                      errors?.email ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.email}
-                  />
-                  <FaEnvelope
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors?.email}</p>
-                  )}
-                </div>
-
-                {/* Password Div */}
-                <div className="relative passwordDiv">
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter your Password"
-                    className={`w-full p-2 border rounded ${
-                      errors?.password ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.password}
-                  />
-                  <FaLock
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.password && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.password}
-                    </p>
-                  )}
-                </div>
-
-                {/* Confirm Password Div */}
-                <div className="relative password2Div">
-                  <input
-                    type="password"
-                    name="password2"
-                    placeholder="Confirm your Password"
-                    className={`w-full p-2 border rounded ${
-                      errors?.password2 ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.password2}
-                  />
-                  <FaLock
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.password2 && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.password2}
-                    </p>
-                  )}
-                </div>
-
-                {/* Profile Picture */}
-                <div className="relative ProfilePictureDiv">
-                  <input
-                    type="file"
-                    name="profilePicture"
-                    className={`w-full p-2 border rounded ${
-                      errors?.profilePicture
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    accept="image/*"
-                  />
-                  <FaFile
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.profilePicture && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.profilePicture}
-                    </p>
-                  )}
-                </div>
-
-                {/* Preview Image */}
-                {preview && (
-                  <div className="mt-4">
-                    <img
-                      src={preview}
-                      alt="Profile Preview"
-                      className="w-32 h-32 object-cover rounded-full"
+          {/* Form */}
+          <form onSubmit={(e) => submitForm(e)}>
+            {isError ? (
+              <>
+                <p className="error-message">{formError}</p>
+              </>
+            ) : (
+              <>
+                <div className="flex flex-col gap-4 w-[400px]">
+                  {/* Name Div */}
+                  <div className="relative nameDiv">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Enter your Full Name"
+                      className={`w-full p-2 border rounded ${
+                        errors?.name ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.name}
                     />
+                    <FaUser
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: primaryText,
+                      }}
+                    />
+                    {errors?.name && (
+                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                    )}
                   </div>
-                )}
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="mt-4 p-2 font-bold text-lg rounded hover:scale-105 border transition-transform duration-300 hover:cursor-pointer"
-                  style={{
-                    backgroundColor: primaryText,
-                    color: primaryBg,
-                  }}
-                >
-                  Register
-                </button>
-                <p className="mt-4 text-sm mx-auto">
-                  Already have an account?{" "}
-                  <Link to="/login" className="text-black font-bold underline">
-                    Login
-                  </Link>
-                </p>
-              </div>
-            </>
-          )}
-        </form>
+                  {/* Email Div */}
+                  <div className="relative emailDiv">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Enter your Email"
+                      className={`w-full p-2 border rounded ${
+                        errors?.email ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.email}
+                    />
+                    <FaEnvelope
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: primaryText,
+                      }}
+                    />
+                    {errors?.email && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.email}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Password Div */}
+                  <div className="relative passwordDiv">
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Enter your Password"
+                      className={`w-full p-2 border rounded ${
+                        errors?.password ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.password}
+                    />
+                    <FaLock
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: primaryText,
+                      }}
+                    />
+                    {errors?.password && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.password}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Confirm Password Div */}
+                  <div className="relative password2Div">
+                    <input
+                      type="password"
+                      name="password2"
+                      placeholder="Confirm your Password"
+                      className={`w-full p-2 border rounded ${
+                        errors?.password2 ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.password2}
+                    />
+                    <FaLock
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: primaryText,
+                      }}
+                    />
+                    {errors?.password2 && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.password2}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Department Div */}
+                  <div className="relative departmentDiv">
+                    <select
+                      name="department"
+                      value={userData?.department}
+                      id="department"
+                      onChange={handleFormChange}
+                      className={`w-full p-2 border rounded ${
+                        errors?.department
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                    >
+                      <option value="">Select Department</option>
+                      <option value="AI">AI</option>
+                      <option value="IT">IT</option>
+                      <option value="CS">CS</option>
+                    </select>
+                  </div>
+
+                  {/* Profile Picture */}
+                  <div className="relative ProfilePictureDiv">
+                    <input
+                      type="file"
+                      name="profilePicture"
+                      className={`w-full p-2 border rounded ${
+                        errors?.profilePicture
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      accept="image/*"
+                    />
+                    <FaFile
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: primaryText,
+                      }}
+                    />
+                    {errors?.profilePicture && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.profilePicture}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Preview Image */}
+                  {preview && (
+                    <div className="mt-4">
+                      <img
+                        src={preview}
+                        alt="Profile Preview"
+                        className="w-32 h-32 object-cover rounded-full"
+                      />
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="mt-4 p-2 font-bold text-lg rounded hover:scale-105 border transition-transform duration-300 hover:cursor-pointer"
+                    style={{
+                      backgroundColor: primaryText,
+                      color: primaryBg,
+                    }}
+                  >
+                    Register
+                  </button>
+                  <p className="mt-4 text-sm mx-auto">
+                    Already have an account?{" "}
+                    <Link
+                      to="/login"
+                      className="text-black font-bold underline"
+                    >
+                      Login
+                    </Link>
+                  </p>
+                </div>
+              </>
+            )}
+          </form>
         </div>
       </div>
     </>

@@ -16,7 +16,9 @@ export const registerUser = createAsyncThunk (
     async( userData, thunkApi) => {
         try{
             const result = await userService.registerUser(userData)
-            return result; 
+            console.log(result.data);
+            
+            return result.data; 
         }catch(error){
             const message = error.response.data.message || error.message || error.toString()
             return thunkApi.rejectWithValue(message)
@@ -94,7 +96,7 @@ const userSlice = createSlice({
         .addCase(registerUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
-            state.user = null
+            state.user = action.payload.data;
         })
         .addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false;
