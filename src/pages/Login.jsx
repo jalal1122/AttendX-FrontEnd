@@ -166,9 +166,9 @@ const dispatch = useDispatch();
                 </button>
               </div>
               <div className="flex justify-center">
-                <p>Don't have an account?</p>
-                <Link to="/register" className="text-black font-bold underline">
-                   Create Account
+                <p>Don't have an account? </p>
+                <Link to="/register/student" className="text-black font-bold underline">
+                    Create Account
                 </Link>
               </div>
               <div className="flex justify-center mt-4">

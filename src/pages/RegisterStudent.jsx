@@ -9,6 +9,7 @@ import { registerUser, reset } from "../features/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../Components/Navbar/Navbar.jsx";
 
 export const RegisterStudent = () => {
   const dispatch = useDispatch();
@@ -16,16 +17,16 @@ export const RegisterStudent = () => {
   const { user, isError, isSuccess, message } = useSelector(
     (state) => state.user
   );
-  const { primaryBg, primaryText } = useSelector((state) => state.color.colors);
+  const { Text, Background } = useSelector((state) => state.color.colors);
 
-  const { formError, setFormError } = useState(null);
+  const [ formError, setFormError ] = useState(null);
 
   useEffect(() => {
     if (isError) {
       setFormError(message);
       console.log(message, "error");
     }
-    if (isSuccess || user) {
+    if (isSuccess) {
       navigate("/login");
       setFormError(null);
       console.log(user, "User logged in successfully");
@@ -33,15 +34,16 @@ export const RegisterStudent = () => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const { preview, setPreview } = useState(null);
+  const [ preview, setPreview ] = useState(null);
 
-  const { errors, setErrors } = useState({});
+  const [ errors, setErrors ] = useState({});
 
-  const { userData, setUserData } = useState({
+  const [ userData, setUserData ] = useState({
     name: "",
     email: "",
     password: "",
     password2: "",
+    role: "student",
     departments: "",
     profilePicture: null,
   });
@@ -116,10 +118,6 @@ export const RegisterStudent = () => {
 
     const newErrors = {};
 
-    if (!userData.trim()) {
-      newErrors.userData = "User data is required";
-    }
-
     if(!userData.name){
       newErrors.name = "Name is required";
     }
@@ -147,14 +145,15 @@ export const RegisterStudent = () => {
 
   return (
     <>
+      <Navbar />
       <div className="register-container my-3 mx-auto flex flex-col items-center justify-center p-3">
         <div className="Section-pages flex gap-5">
-          <div className="border p-2 mt-4 hover:scale-95 border transition-transform duration-300 hover:cursor-pointer">
+          <div className="border border-black p-2 mt-4 hover:scale-95 transition-transform duration-300">
             <Link to="/register/student" className="text-xl font-bold">
             Student
           </Link>
           </div>
-          <div className="border p-2 mt-4 hover:scale-95 border transition-transform duration-300 hover:cursor-pointer">
+          <div className="border border-black p-2 mt-4 hover:scale-95 transition-transform duration-300">
             <Link to="/register/teacher" className="text-xl font-bold">
               Teacher
             </Link>
@@ -162,14 +161,14 @@ export const RegisterStudent = () => {
         </div>
         <div>
           {/* Heading */}
-          <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="flex items-center justify-center gap-4 mb-6 mt-2">
             <h1 className="text-4xl font-bold">Register Student</h1>
             <FaGraduationCap size={30} />
           </div>
 
          
         {/* Form */}
-        <form onSubmit={() => submitForm(e)}>
+        <form onSubmit={(e) => submitForm(e)}>
           {isError ? (
             <>
               <p className="error-message">{formError}</p>
@@ -238,7 +237,7 @@ export const RegisterStudent = () => {
                   <FaLock
                     className="absolute right-2 top-3"
                     style={{
-                      color: primaryText,
+                      color: Text.Primary,
                     }}
                   />
                   {errors?.password && (
@@ -276,7 +275,7 @@ export const RegisterStudent = () => {
                 {/* Departments */}
                 <div>
                   <select name="departments" className={`w-full p-2 border rounded ${
-                      errors?.profilePicture
+                      errors?.departments
                         ? "border-red-500"
                         : "border-gray-300"
                     }`} onChange={handleFormChange} value={userData?.departments}>
@@ -341,7 +340,7 @@ export const RegisterStudent = () => {
                 >
                   Register
                 </button>
-                <p className="mt-4 text-sm mx-auto">
+                <p className="mt-4 text-md-bold mx-auto">
                   Already have an account?{" "}
                   <Link to="/login" className="text-black font-bold underline">
                     Login
