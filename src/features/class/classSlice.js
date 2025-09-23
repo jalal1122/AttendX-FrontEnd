@@ -3,18 +3,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Initial state for the class slice
 const initialState = {
-  classes: [],
-  isLoading: false,
+  classes: null,
+  Loading: false,
   isError: false,
   isSuccess: false,
-  message: "",
+
+  // Specific states for create class
+  createClass: null,
+  createClassLoading: false,
+  createClassError: null,
+  createClassSuccess: null,
 };
 
 export const createClass = createAsyncThunk(
   "class/create",
-  async (classData, thunkApi) => {
+  async (className, thunkApi) => {
     try {
-      const response = await classService.createClass(classData);
+      const response = await classService.createClass(className);
       return response.data;
     } catch (error) {
       const message =
@@ -112,49 +117,52 @@ const classSlice = createSlice({
   name: "class",
   initialState: initialState,
   reducers: {
+    // Create Class Reset
+    resetCreateClass: (state) => {
+      state.createClassLoading = false;
+      state.createClassError = null;
+      state.createClassSuccess = false;
+    },
+
+    // Classes Reset
     reset: (state) => {
-      state.isLoading = false;
+      state.Loading = false;
       state.isError = false;
       state.isSuccess = false;
-      state.message = "";
     },
   },
   extraReducers: (builder) => {
     builder
       // Create Class
       .addCase(createClass.pending, (state) => {
-        state.isLoading = true;
-        state.isSuccess = false;
-        state.isError = false;
-        state.message = "";
+        state.createClassLoading = true;
+        state.createClassSuccess = false;
+        state.createClassError = null;
       })
       .addCase(createClass.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.classes.push(action.payload.data);
-        state.message = "Class created successfully";
+        state.createClassLoading = false;
+        state.createClassSuccess = true;
+        state.createClass = action.payload;
       })
       .addCase(createClass.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.createClassLoading = false;
+        state.createClassSuccess = false;
+        state.createClassError = action.payload;
       })
 
       // Get All Classes
       .addCase(getClasses.pending, (state) => {
-        state.isLoading = true;
+        state.Loading = true;
         state.isSuccess = false;
         state.isError = false;
-        state.message = "";
       })
       .addCase(getClasses.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.Loading = false;
         state.isSuccess = true;
-        state.classes = action.payload.data;
-        state.message = "Classes retrieved successfully";
+        state.classes = action.payload;
       })
       .addCase(getClasses.rejected, (state, action) => {
-        state.isLoading = false;
+        state.Loading = false;
         state.isError = true;
         state.message = action.payload;
       })
@@ -258,7 +266,6 @@ const classSlice = createSlice({
   },
 });
 
-
-export const { reset } = classSlice.actions;
+export const { resetCreateClass, reset } = classSlice.actions;
 
 export default classSlice.reducer;

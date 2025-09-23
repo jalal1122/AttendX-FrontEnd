@@ -3,10 +3,10 @@ import { MdClass } from "react-icons/md";
 import { useState } from "react";
 import { MdAssignmentTurnedIn } from "react-icons/md";
 
-const NavigationTab = ({ isMenuExtended }) => {
+const NavigationTab = ({ isMenuExtended, activeTab, setActiveTab}) => {
   const colors = useSelector((state) => state.color.colors);
 
-  const [activeTab, setActiveTab] = useState("Classes");
+  
 
   const tabsIconSize = 28;
 
