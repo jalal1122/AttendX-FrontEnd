@@ -1,9 +1,11 @@
 import Navbar from "../Components/Navbar/Navbar"
+import NavigationTab from "../Components/NavigationTab"
 
 const Class = () => {
   return (
     <>
     <Navbar />
+    <NavigationTab />
          <div className="flex flex-col md:flex-row gap-6 w-full h-full p-6">
       {/* Left Section - Students Table */}
       <div className="flex-1 bg-white rounded-2xl shadow p-4">
