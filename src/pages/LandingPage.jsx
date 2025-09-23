@@ -6,6 +6,7 @@ import Classes from "../Components/Classes";
 
 const LandingPage = () => {
   const { colors } = useSelector((state) => state.color);
+  const { role } = useSelector((state) => state.user);
 
   //   state for extended menu
   const [isMenuExtended, setIsMenuExtended] = useState(true);
@@ -47,7 +48,7 @@ const LandingPage = () => {
           backgroundColor: colors.Primary,
           color: colors.Text.Primary,
         }}>
-          Add Class
+          {role === "student" ? "Scan QR Code" : "Add Class"}
         </button>
       </div>
     </div>

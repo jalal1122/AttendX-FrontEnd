@@ -9,6 +9,7 @@ import { registerUser, reset } from "../features/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../Components/Navbar/Navbar.jsx";
 
 export const RegisterAdmin = () => {
   const dispatch = useDispatch();
@@ -152,6 +153,7 @@ export const RegisterAdmin = () => {
 
   return (
     <>
+    <Navbar />
       <div className="register-container my-10 mx-auto flex flex-col items-center justify-center p-10">
         <div>
           {/* Heading */}

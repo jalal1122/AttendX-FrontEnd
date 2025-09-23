@@ -9,6 +9,7 @@ import { registerUser, reset } from "../features/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../Components/Navbar/Navbar.jsx";
 
 export const RegisterTeacher = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export const RegisterTeacher = () => {
       setFormError(message);
       console.log(message, "error");
     }
-    if (isSuccess || user) {
+    if (isSuccess) {
       navigate("/login");
       setFormError(null);
       console.log(user, "User logged in successfully");
@@ -42,6 +43,7 @@ export const RegisterTeacher = () => {
     email: "",
     password: "",
     password2: "",
+    role: "teacher",
     departments: "",
     profilePicture: null,
   });
@@ -143,6 +145,7 @@ export const RegisterTeacher = () => {
 
   return (
     <>
+      <Navbar />
       <div className="register-container my-3 mx-auto flex flex-col items-center justify-center p-3">
         <div className="Section-pages flex gap-5">
           <div className="border border-black p-2 mt-4 hover:scale-95 transition-transform duration-300">
@@ -272,7 +275,7 @@ export const RegisterTeacher = () => {
                 {/* Departments */}
                 <div>
                   <select name="departments" className={`w-full p-2 border rounded ${
-                      errors?.profilePicture
+                      errors?.departments
                         ? "border-red-500"
                         : "border-gray-300"
                     }`} onChange={handleFormChange} value={userData?.departments}>
