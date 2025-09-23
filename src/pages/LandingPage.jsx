@@ -2,7 +2,9 @@ import Navbar from "../Components/Navbar/Navbar";
 import { useSelector } from "react-redux";
 import NavigationTab from "../Components/NavigationTab";
 import { useState } from "react";
+import { FaQrcode } from "react-icons/fa";
 import Classes from "../Components/Classes";
+import { MdClass } from "react-icons/md";
 
 const LandingPage = () => {
   const { colors } = useSelector((state) => state.color);
@@ -44,11 +46,11 @@ const LandingPage = () => {
         </div>
 
         {/* Button */}
-        <button className="fixed bottom-10 right-10 px-3 py-2 rounded-lg font-semibold" style={{
+        <button className="fixed bottom-10 right-10 flex justify-center items-center hover:cursor-pointer hover:scale-105 transition-transform duration-300 px-3 py-2 rounded-lg font-semibold text-lg" style={{
           backgroundColor: colors.Primary,
           color: colors.Text.Primary,
         }}>
-          {role === "student" ? "Scan QR Code" : "Add Class"}
+          {role === <>student {" "} <FaQrcode size={20} className="inline-block ml-1" /> </> ? "Scan QR Code" : <>Add Class {" "} <MdClass size={20} className="inline-block ml-1" /></>}
         </button>
       </div>
     </div>

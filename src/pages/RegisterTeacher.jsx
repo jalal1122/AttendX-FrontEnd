@@ -44,7 +44,7 @@ export const RegisterTeacher = () => {
     password: "",
     password2: "",
     role: "teacher",
-    departments: "",
+    department: "",
     profilePicture: null,
   });
 
@@ -133,6 +133,10 @@ export const RegisterTeacher = () => {
 
     if (userData.password !== userData.password2) {
       newErrors.password2 = "Passwords do not match";
+    }
+
+    if(!userData.department){
+      newErrors.department = "Department is required"
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -274,20 +278,20 @@ export const RegisterTeacher = () => {
 
                 {/* Departments */}
                 <div>
-                  <select name="departments" className={`w-full p-2 border rounded ${
-                      errors?.departments
+                  <select name="department" className={`w-full p-2 border rounded ${
+                      errors?.department
                         ? "border-red-500"
                         : "border-gray-300"
-                    }`} onChange={handleFormChange} value={userData?.departments}>
+                    }`} onChange={handleFormChange} value={userData?.department}>
                     <option value="">Select Department</option>
                     <option value="CS">Computer Science</option>
                     <option value="IT">Information Technology</option>
                     <option value="SE">Software Engineering</option>
                     <option value="DS">Data Science</option>
                   </select>
-                  {errors?.departments && (
+                  {errors?.department && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors?.departments}
+                      {errors?.department}
                     </p>
                   )}
                 </div>

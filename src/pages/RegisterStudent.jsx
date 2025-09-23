@@ -19,7 +19,7 @@ export const RegisterStudent = () => {
   );
   const { Text, Background } = useSelector((state) => state.color.colors);
 
-  const [ formError, setFormError ] = useState(null);
+  const [formError, setFormError] = useState(null);
 
   useEffect(() => {
     if (isError) {
@@ -34,11 +34,11 @@ export const RegisterStudent = () => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const [ preview, setPreview ] = useState(null);
+  const [preview, setPreview] = useState(null);
 
-  const [ errors, setErrors ] = useState({});
+  const [errors, setErrors] = useState({});
 
-  const [ userData, setUserData ] = useState({
+  const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
@@ -102,7 +102,7 @@ export const RegisterStudent = () => {
       setUserData({ ...userData, [name]: value });
 
       // Clear error when user starts typing
-        setErrors({ ...errors, [name]: "" });
+      setErrors({ ...errors, [name]: "" });
     }
   };
 
@@ -118,7 +118,7 @@ export const RegisterStudent = () => {
 
     const newErrors = {};
 
-    if(!userData.name){
+    if (!userData.name) {
       newErrors.name = "Name is required";
     }
 
@@ -150,8 +150,8 @@ export const RegisterStudent = () => {
         <div className="Section-pages flex gap-5">
           <div className="border border-black p-2 mt-4 hover:scale-95 transition-transform duration-300">
             <Link to="/register/student" className="text-xl font-bold">
-            Student
-          </Link>
+              Student
+            </Link>
           </div>
           <div className="border border-black p-2 mt-4 hover:scale-95 transition-transform duration-300">
             <Link to="/register/teacher" className="text-xl font-bold">
@@ -166,190 +166,199 @@ export const RegisterStudent = () => {
             <FaGraduationCap size={30} />
           </div>
 
-         
-        {/* Form */}
-        <form onSubmit={(e) => submitForm(e)}>
-          {isError ? (
-            <>
-              <p className="error-message">{formError}</p>
-            </>
-          ) : (
-            <>
-              <div className="flex flex-col gap-4 w-[400px]">
-                {/* Name Div */}
-                <div className="relative nameDiv">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Enter your Full Name"
-                    className={`w-full p-2 border rounded ${
-                       errors?.name ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.name}
-                  />
-                  <FaUser
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.name && (
-                    <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                  )}
-                </div>
-
-                {/* Email Div */}
-                <div className="relative emailDiv">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your Email"
-                    className={`w-full p-2 border rounded ${
-                      errors?.email ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.email}
-                  />
-                  <FaEnvelope
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors?.email}</p>
-                  )}
-                </div>
-
-                {/* Password Div */}
-                <div className="relative passwordDiv">
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter your Password"
-                    className={`w-full p-2 border rounded ${
-                      errors?.password ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.password}
-                  />
-                  <FaLock
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: Text.Primary,
-                    }}
-                  />
-                  {errors?.password && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.password}
-                    </p>
-                  )}
-                </div>
-
-                {/* Confirm Password Div */}
-                <div className="relative password2Div">
-                  <input
-                    type="password"
-                    name="password2"
-                    placeholder="Confirm your Password"
-                    className={`w-full p-2 border rounded ${
-                      errors?.password2 ? "border-red-500" : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    value={userData?.password2}
-                  />
-                  <FaLock
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.password2 && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.password2}
-                    </p>
-                  )}
-                </div>
-
-                {/* Departments */}
-                <div>
-                  <select name="departments" className={`w-full p-2 border rounded ${
-                      errors?.departments
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    }`} onChange={handleFormChange} value={userData?.departments}>
-                    <option value="">Select Department</option>
-                    <option value="CS">Computer Science</option>
-                    <option value="IT">Information Technology</option>
-                    <option value="SE">Software Engineering</option>
-                    <option value="DS">Data Science</option>
-                  </select>
-                  {errors?.departments && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.departments}
-                    </p>
-                  )}
-                </div>
-
-                {/* Profile Picture */}
-                <div className="relative ProfilePictureDiv">
-                  <input
-                    type="file"
-                    name="profilePicture"
-                    className={`w-full p-2 border rounded ${
-                      errors?.profilePicture
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    }`}
-                    onChange={handleFormChange}
-                    accept="image/*"
-                  />
-                  <FaFile
-                    className="absolute right-2 top-3"
-                    style={{
-                      color: primaryText,
-                    }}
-                  />
-                  {errors?.profilePicture && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors?.profilePicture}
-                    </p>
-                  )}
-                </div>
-
-                {/* Preview Image */}
-                {preview && (
-                  <div className="mt-4">
-                    <img
-                      src={preview}
-                      alt="Profile Preview"
-                      className="w-32 h-32 object-cover rounded-full"
+          {/* Form */}
+          <form onSubmit={(e) => submitForm(e)}>
+            {isError ? (
+              <>
+                <p className="error-message">{formError}</p>
+              </>
+            ) : (
+              <>
+                <div className="flex flex-col gap-4 w-[400px]">
+                  {/* Name Div */}
+                  <div className="relative nameDiv">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Enter your Full Name"
+                      className={`w-full p-2 border rounded ${
+                        errors?.name ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.name}
                     />
+                    <FaUser
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: Text.Primary,
+                      }}
+                    />
+                    {errors?.name && (
+                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                    )}
                   </div>
-                )}
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="mt-4 p-2 font-bold text-lg rounded hover:scale-105 border transition-transform duration-300 hover:cursor-pointer"
-                  style={{
-                    backgroundColor: primaryText,
-                    color: primaryBg,
-                  }}
-                >
-                  Register
-                </button>
-                <p className="mt-4 text-md-bold mx-auto">
-                  Already have an account?{" "}
-                  <Link to="/login" className="text-black font-bold underline">
-                    Login
-                  </Link>
-                </p>
-              </div>
-            </>
-          )}
-        </form>
+                  {/* Email Div */}
+                  <div className="relative emailDiv">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Enter your Email"
+                      className={`w-full p-2 border rounded ${
+                        errors?.email ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.email}
+                    />
+                    <FaEnvelope
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: Text.Primary,
+                      }}
+                    />
+                    {errors?.email && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.email}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Password Div */}
+                  <div className="relative passwordDiv">
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Enter your Password"
+                      className={`w-full p-2 border rounded ${
+                        errors?.password ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.password}
+                    />
+                    <FaLock
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: Text.Primary,
+                      }}
+                    />
+                    {errors?.password && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.password}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Confirm Password Div */}
+                  <div className="relative password2Div">
+                    <input
+                      type="password"
+                      name="password2"
+                      placeholder="Confirm your Password"
+                      className={`w-full p-2 border rounded ${
+                        errors?.password2 ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.password2}
+                    />
+                    <FaLock
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: Text.Primary,
+                      }}
+                    />
+                    {errors?.password2 && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.password2}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Departments */}
+                  <div>
+                    <select
+                      name="departments"
+                      className={`w-full p-2 border rounded ${
+                        errors?.departments
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      value={userData?.departments}
+                    >
+                      <option value="">Select Department</option>
+                      <option value="CS">Computer Science</option>
+                      <option value="IT">Information Technology</option>
+                      <option value="SE">Software Engineering</option>
+                      <option value="DS">Data Science</option>
+                    </select>
+                    {errors?.departments && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.departments}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Profile Picture */}
+                  <div className="relative ProfilePictureDiv">
+                    <input
+                      type="file"
+                      name="profilePicture"
+                      className={`w-full p-2 border rounded ${
+                        errors?.profilePicture
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      onChange={handleFormChange}
+                      accept="image/*"
+                    />
+                    <FaFile
+                      className="absolute right-2 top-3"
+                      style={{
+                        color: Text.Primary,
+                      }}
+                    />
+                    {errors?.profilePicture && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.profilePicture}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Preview Image */}
+                  {preview && (
+                    <div className="mt-4">
+                      <img
+                        src={preview}
+                        alt="Profile Preview"
+                        className="w-32 h-32 object-cover rounded-full"
+                      />
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="mt-4 p-2 font-bold text-lg rounded hover:scale-105 border transition-transform duration-300 hover:cursor-pointer"
+                    style={{
+                      backgroundColor: Text.Primary,
+                      color: Background,
+                    }}
+                  >
+                    Register
+                  </button>
+                  <p className="mt-4 text-md-bold mx-auto">
+                    Already have an account?{" "}
+                    <Link
+                      to="/login"
+                      className="text-black font-bold underline"
+                    >
+                      Login
+                    </Link>
+                  </p>
+                </div>
+              </>
+            )}
+          </form>
         </div>
       </div>
     </>

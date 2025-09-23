@@ -4,6 +4,7 @@ import { userService } from "./userService.js";
 // Initial state for the user slice
 const initialState = {
     user: JSON.parse(localStorage.getItem("user")) || null,
+    role: null,
     isError : false,
     isLoading: false,
     isSuccess: false,
@@ -113,6 +114,7 @@ const userSlice = createSlice({
             state.isSuccess = true;
             state.user = action.payload.data;
             localStorage.setItem("user", JSON.stringify(action.payload.data));
+            state.role = action.payload.data.role
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false;
