@@ -130,6 +130,7 @@ const userSlice = createSlice({
         state.isSuccess = true;
         state.user = null;
         localStorage.removeItem("user");
+        document.reload(true);
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;

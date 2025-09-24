@@ -19,7 +19,27 @@ const initialState = {
   classDetailsLoading: false,
   classDetailsError: null,
   classDetailsSuccess: false,
+
+  // Joine Class for Students States
+  joinClassesLoading: false,
+  joinClassesError: null,
+  joinClassesSuccess: false,
+  joinedClasses: null,
 };
+
+export const getJoinedClasses = createAsyncThunk(
+  "class/getJoined",
+  async (_, thunkApi) => {
+    try {
+      const response = await classService.getJoinedClasses();
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
 
 export const createClass = createAsyncThunk(
   "class/create",
@@ -69,7 +89,7 @@ export const getClassByCode = createAsyncThunk(
     try {
       const response = await classService.getClassByCode(classCode);
       console.log(response.data);
-      
+
       return response.data;
     } catch (error) {
       const message =
@@ -138,10 +158,19 @@ const classSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
     },
+
+    // Class Details Reset
     classDetailsReset: (state) => {
       state.classDetailsLoading = false;
       state.classDetailsError = null;
       state.classDetailsSuccess = false;
+    },
+
+    // Join Classes Reset
+    joinClassesReset: (state) => {
+      state.joinClassesLoading = false;
+      state.joinClassesError = null;
+      state.joinClassesSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -201,21 +230,37 @@ const classSlice = createSlice({
 
       // Get Class By Code
       .addCase(getClassByCode.pending, (state) => {
-        state.isLoading = true;
+        state.Loading = true;
         state.isSuccess = false;
         state.isError = false;
         state.message = "";
       })
       .addCase(getClassByCode.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.Loading = false;
         state.isSuccess = true;
         state.classes = action.payload.data;
         state.message = "Class Get by Code successfully";
       })
       .addCase(getClassByCode.rejected, (state, action) => {
-        state.isLoading = false;
+        state.Loading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+
+      // Get Joined Classes
+      .addCase(getJoinedClasses.pending, (state) => {
+        state.joinClassesLoading = true;
+        state.joinClassesSuccess = false;
+        state.joinClassesError = null;
+      })
+      .addCase(getJoinedClasses.fulfilled, (state, action) => {
+        state.joinClassesLoading = false;
+        state.joinClassesSuccess = true;
+        state.joinedClasses = action.payload.data;
+      })
+      .addCase(getJoinedClasses.rejected, (state, action) => {
+        state.joinClassesLoading = false;
+        state.joinClassesError = action.payload;
       })
 
       // Get Class By Name
@@ -279,6 +324,7 @@ const classSlice = createSlice({
   },
 });
 
-export const { resetCreateClass, reset } = classSlice.actions;
+export const { resetCreateClass, reset, resetJoinClasses, classDetailsReset } =
+  classSlice.actions;
 
 export default classSlice.reducer;

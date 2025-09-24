@@ -27,6 +27,11 @@ const getClassById = async (classId) => {
   return response.data;
 };
 
+const getJoinedClasses = async () => {
+  const response = await axios.get(`${class_EndPoint}/joined`);
+  return response.data;
+};
+
 const getClassByCode = async (classCode) => {
   const response = await axios.get(`${class_EndPoint}/code/${classCode}`);
   return response.data;
@@ -55,6 +60,7 @@ export const classService = {
   createClass,
   getClasses,
   getClassById,
+  getJoinedClasses,
   getClassByCode,
   getClassByName,
   joinClass,
