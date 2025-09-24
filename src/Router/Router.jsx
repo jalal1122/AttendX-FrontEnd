@@ -5,15 +5,13 @@ import RegisterStudent from "../pages/RegisterStudent";
 import Login from "../pages/Login";
 import Class from "../pages/Class";
 import LandingPage from "../pages/LandingPage";
+import { useSelector } from "react-redux";
 
 const Router = () => {
-
+  const { user } = useSelector((state) => state.user);
   return (
     <Routes>
-      <Route
-        path="/"
-        element={localStorage.getItem("user") ? <LandingPage /> : <RegisterStudent />}
-      />
+      <Route path="/" element={user ? <LandingPage /> : <RegisterStudent />} />
 
       <Route path="/register/admin" element={<RegisterAdmin />} />
 

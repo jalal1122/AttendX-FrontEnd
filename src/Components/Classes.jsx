@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getClasses } from "../features/class/classSlice.js";
 import { useEffect, useMemo, useState } from "react";
 
-const Classes = () => {
+const Classes = ({setActiveTab}) => {
   // get the colors from the redux store
   const { colors } = useSelector((state) => state.color);
 

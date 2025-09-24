@@ -2,11 +2,12 @@ import { useSelector } from "react-redux";
 import { MdClass } from "react-icons/md";
 import { useState } from "react";
 import { MdAssignmentTurnedIn } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
-const NavigationTab = ({ isMenuExtended, activeTab, setActiveTab}) => {
+const NavigationTab = ({ isMenuExtended, activeTab, setActiveTab }) => {
   const colors = useSelector((state) => state.color.colors);
 
-  
+  const navigate = useNavigate();
 
   const tabsIconSize = 28;
 
@@ -59,6 +60,7 @@ const NavigationTab = ({ isMenuExtended, activeTab, setActiveTab}) => {
                 key={index}
                 onClick={() => {
                   setActiveTab(tab.name);
+                  navigate("/");
                 }}
                 className={buttonsClasses}
                 style={{

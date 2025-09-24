@@ -26,13 +26,19 @@ export const RegisterStudent = () => {
       setFormError(message);
       console.log(message, "error");
     }
+  }, [isError, message]);
+
+  useEffect(() => {
     if (isSuccess) {
       navigate("/login");
       setFormError(null);
       console.log(user, "User logged in successfully");
     }
+  }, [isSuccess]);
+
+  useEffect(() => {
     dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, []);
 
   const [preview, setPreview] = useState(null);
 

@@ -1,11 +1,10 @@
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import { loginUser, reset} from "../features/user/userSlice.js";
+import { loginUser, reset } from "../features/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Login = () => {
-
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -24,7 +23,6 @@ const dispatch = useDispatch();
 
     if (isSuccess && user) {
       navigate("/");
-      // Don't reset here - let the user state persist
     }
 
     return () => {
@@ -32,9 +30,7 @@ const dispatch = useDispatch();
     };
   }, [isSuccess, isError, message, dispatch, navigate, user]);
 
-  const { primaryText, primaryBg } = useSelector(
-    (state) => state.color.colors
-  );
+  const { primaryText, primaryBg } = useSelector((state) => state.color.colors);
 
   const [errors, setErrors] = useState({});
 
@@ -167,12 +163,18 @@ const dispatch = useDispatch();
               </div>
               <div className="flex justify-center">
                 <p>Don't have an account? </p>
-                <Link to="/register/student" className="text-black font-bold underline">
-                    Create Account
+                <Link
+                  to="/register/student"
+                  className="text-black font-bold underline"
+                >
+                  Create Account
                 </Link>
               </div>
               <div className="flex justify-center mt-4">
-                <Link to="/forgot-password" className="text-black font-bold underline">
+                <Link
+                  to="/forgot-password"
+                  className="text-black font-bold underline"
+                >
                   Forgot Password?
                 </Link>
               </div>
@@ -185,7 +187,7 @@ const dispatch = useDispatch();
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

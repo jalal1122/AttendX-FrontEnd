@@ -16,8 +16,9 @@ const Class = () => {
   const { classCode } = useParams();
 
   useEffect(() => {
+    setActiveTab("none");
     dispatch(getClassByCode(classCode));
-  });
+  }, [classCode]);
 
   return (
     <>

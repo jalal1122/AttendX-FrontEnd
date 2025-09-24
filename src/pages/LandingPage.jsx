@@ -83,7 +83,7 @@ const LandingPage = () => {
         >
           <h1 className="text-5xl font-bold flex">Welcome to Attend <p className="text-blue-800">X</p></h1>
 
-          {activeTab === "Classes" ? <Classes /> : "height"}
+          {activeTab === "Classes" ? <Classes setActiveTab={setActiveTab} /> : "height"}
         </div>
 
         {/* Button */}
