@@ -25,12 +25,12 @@ const Navbar = ({ isMenuExtended, setIsMenuExtended }) => {
 
           {/* Heading */}
           <h1
-            className="text-2xl font-bold"
+            className="text-2xl font-bold flex"
             style={{
               color: colors.Text.Primary,
             }}
           >
-            AttendX
+            Attend <p className="text-blue-800">X</p>
           </h1>
         </div>
 

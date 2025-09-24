@@ -81,7 +81,7 @@ const LandingPage = () => {
             backgroundColor: colors.Secondary,
           }}
         >
-          <h1 className="text-5xl font-bold">Welcome to AttendX</h1>
+          <h1 className="text-5xl font-bold flex">Welcome to Attend <p className="text-blue-800">X</p></h1>
 
           {activeTab === "Classes" ? <Classes /> : "height"}
         </div>
