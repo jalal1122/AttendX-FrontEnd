@@ -5,10 +5,8 @@ import RegisterStudent from "../pages/RegisterStudent";
 import Login from "../pages/Login";
 import Class from "../pages/Class";
 import LandingPage from "../pages/LandingPage";
-import { useNavigate } from "react-router-dom";
 
 const Router = () => {
-  const navigate = useNavigate();
 
   return (
     <Routes>

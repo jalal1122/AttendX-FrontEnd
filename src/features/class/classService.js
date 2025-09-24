@@ -28,16 +28,12 @@ const getClassById = async (classId) => {
 };
 
 const getClassByCode = async (classCode) => {
-  const response = await axios.get(`${class_EndPoint}/:code/${classCode}`, {
-    headers: {},
-  });
+  const response = await axios.get(`${class_EndPoint}/${classCode}`);
   return response.data;
 };
 
 const getClassByName = async (className) => {
-  const response = await axios.get(`${class_EndPoint}/:name/${className}`, {
-    headers: {},
-  });
+  const response = await axios.get(`${class_EndPoint}/${className}`);
   return response.data;
 };
 

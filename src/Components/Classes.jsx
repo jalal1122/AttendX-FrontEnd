@@ -11,7 +11,7 @@ const Classes = () => {
 
   const {
     isError,
-    isLoading,
+    Loading,
     message,
     classes: classList,
   } = useSelector((state) => state.class);
@@ -32,7 +32,8 @@ const Classes = () => {
     // We intentionally dispatch once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const loading = Boolean(isLoading);
+
+  const loading = Boolean(Loading);
   const items = useMemo(() => classList || [], [classList]);
   const initials = (name) => {
     if (!name) return "?";

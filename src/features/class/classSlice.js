@@ -13,6 +13,12 @@ const initialState = {
   createClassLoading: false,
   createClassError: null,
   createClassSuccess: null,
+
+  // states for get class by id
+  classDetails: null,
+  classDetailsLoading: false,
+  classDetailsError: null,
+  classDetailsSuccess: false,
 };
 
 export const createClass = createAsyncThunk(
@@ -62,6 +68,8 @@ export const getClassByCode = createAsyncThunk(
   async (classCode, thunkApi) => {
     try {
       const response = await classService.getClassByCode(classCode);
+      console.log(response);
+      
       return response.data;
     } catch (error) {
       const message =
@@ -129,6 +137,11 @@ const classSlice = createSlice({
       state.Loading = false;
       state.isError = false;
       state.isSuccess = false;
+    },
+    classDetailsReset: (state) => {
+      state.classDetailsLoading = false;
+      state.classDetailsError = null;
+      state.classDetailsSuccess = false;
     },
   },
   extraReducers: (builder) => {
