@@ -68,7 +68,7 @@ export const getClassByCode = createAsyncThunk(
   async (classCode, thunkApi) => {
     try {
       const response = await classService.getClassByCode(classCode);
-      console.log(response);
+      console.log(response.data);
       
       return response.data;
     } catch (error) {

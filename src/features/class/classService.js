@@ -28,7 +28,7 @@ const getClassById = async (classId) => {
 };
 
 const getClassByCode = async (classCode) => {
-  const response = await axios.get(`${class_EndPoint}/${classCode}`);
+  const response = await axios.get(`${class_EndPoint}/code/${classCode}`);
   return response.data;
 };
 
