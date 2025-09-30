@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Class from "../pages/Class";
 import LandingPage from "../pages/LandingPage";
 import { useSelector } from "react-redux";
+import  Session  from "../pages/Session";
 
 const Router = () => {
   const { user } = useSelector((state) => state.user);
@@ -22,6 +23,8 @@ const Router = () => {
       <Route path="/login" element={!user && <Login />} />
 
       <Route path="/class/:classCode" element={user ? <Class /> : <Login />} />
+
+      <Route path="/class/:classCode/session" element={user ? <Session /> : <Login />} />
 
       <Route path="*" element={<LandingPage />} />
     </Routes>

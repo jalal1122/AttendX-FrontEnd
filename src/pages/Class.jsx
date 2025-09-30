@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getClassByCode } from "../features/class/classSlice.js";
 import { useParams } from "react-router-dom";
 import { FiUser, FiUsers, FiCalendar, FiActivity } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Class = () => {
   const { colors } = useSelector((state) => state.color);
@@ -140,6 +141,7 @@ const Class = () => {
                   </span>
                 </div>
                 {isTeacher && (
+                  <Link to="/session">
                   <button
                     className="rounded-xl px-6 py-3 font-semibold text-sm shadow hover:scale-105 active:scale-95 transition"
                     style={{
@@ -149,6 +151,7 @@ const Class = () => {
                   >
                     Start Session
                   </button>
+                  </Link>
                 )}
               </div>
             </div>
@@ -244,8 +247,8 @@ const Class = () => {
                         className="text-left"
                       >
                         <th className="p-3 font-semibold">Name</th>
-                        <th className="p-3 font-semibold">Email</th>
-                        <th className="p-3 font-semibold">Department</th>
+                        <th className="p-3 font-semibold">Roll No</th>
+                        <th className="p-3 font-semibold">Status</th>
                       </tr>
                     </thead>
                     <tbody>
