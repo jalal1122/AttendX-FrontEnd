@@ -241,21 +241,18 @@ const classSlice = createSlice({
 
       // Get Class By Code
       .addCase(getClassByCode.pending, (state) => {
-        state.Loading = true;
-        state.isSuccess = false;
-        state.isError = false;
-        state.message = "";
+        state.classDetailsLoading = true;
+        state.classDetailsSuccess = false;
+        state.classDetailsError = null;
       })
       .addCase(getClassByCode.fulfilled, (state, action) => {
-        state.Loading = false;
-        state.isSuccess = true;
-        state.classes = action.payload.data;
-        state.message = "Class Get by Code successfully";
+        state.classDetailsLoading = false;
+        state.classDetailsSuccess = true;
+        state.classDetails = action.payload?.data || action.payload;
       })
       .addCase(getClassByCode.rejected, (state, action) => {
-        state.Loading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.classDetailsLoading = false;
+        state.classDetailsError = action.payload;
       })
 
       // Get Joined Classes

@@ -87,24 +87,20 @@ const LandingPage = () => {
         </div>
 
         {/* Button */}
-        <button
-          className="fixed bottom-10 right-10 flex justify-center items-center hover:cursor-pointer hover:scale-105 transition-transform duration-300 px-3 py-2 rounded-lg font-semibold text-lg"
-          style={{
-            backgroundColor: colors.Primary,
-            color: colors.Text.Primary,
-          }}
-          onClick={handleButtonClick}
-        >
-          {role === "student" ? (
-            <>
-              Scan QR Code <FaQrcode size={20} className="inline-block ml-2" />
-            </>
-          ) : (
-            <>
-              Add Class <MdClass size={20} className="inline-block ml-2" />
-            </>
-          )}
+        {role === "student" && (
+          <button
+            className="fixed bottom-10 right-10 flex justify-center items-center hover:cursor-pointer hover:scale-105 transition-transform duration-300 px-3 py-2 rounded-lg font-semibold text-lg"
+            style={{
+              backgroundColor: colors.Primary,
+              color: colors.Text.Primary,
+            }}
+            onClick={handleButtonClick}
+          >
+        Scan QR Code <FaQrcode size={20} className="inline-block ml-2" />
         </button>
+
+        )}
+         
 
         {/* Render Add Class Form */}
         {showRenderAddClass && (role === "teacher" || role === "admin") && (
