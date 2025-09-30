@@ -21,14 +21,16 @@ const Login = () => {
       dispatch(reset());
     }
 
-    if (isSuccess && user) {
-      navigate("/");
-    }
-
     return () => {
       setFormError("");
     };
-  }, [isSuccess, isError, message, dispatch, navigate, user]);
+  }, [isError, message, dispatch]);
+
+  useEffect(() => {
+    if (isSuccess && user) {
+      navigate("/");
+    }
+  }, [isSuccess, user, navigate]);
 
   const { primaryText, primaryBg } = useSelector((state) => state.color.colors);
 
@@ -69,6 +71,7 @@ const Login = () => {
         .unwrap()
         .then(() => {
           // Login successful - handled by useEffect
+          navigate("/");
         })
         .catch((error) => {
           const errorMessage =

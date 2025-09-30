@@ -42,10 +42,8 @@ const getClassByName = async (className) => {
   return response.data;
 };
 
-const joinClass = async (joinData) => {
-  const response = await axios.post(`${class_EndPoint}/join`, joinData, {
-    headers: {},
-  });
+const joinClass = async (classCode) => {
+  const response = await axios.post(`${class_EndPoint}/join/${classCode}`);
   return response.data;
 };
 

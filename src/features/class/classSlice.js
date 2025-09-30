@@ -20,11 +20,17 @@ const initialState = {
   classDetailsError: null,
   classDetailsSuccess: false,
 
-  // Joine Class for Students States
+  // Joined Class for Students States
   joinClassesLoading: false,
   joinClassesError: null,
   joinClassesSuccess: false,
   joinedClasses: null,
+
+  // Single join (student joining a new class by code)
+  joinedClass: null,
+  joinClassLoading: false,
+  joinClassError: null,
+  joinClassSuccess: false,
 };
 
 export const getJoinedClasses = createAsyncThunk(
@@ -115,9 +121,9 @@ export const getClassByName = createAsyncThunk(
 
 export const joinClass = createAsyncThunk(
   "class/join",
-  async (joinData, thunkApi) => {
+  async (classCode, thunkApi) => {
     try {
-      const response = await classService.joinClass(joinData);
+      const response = await classService.joinClass(classCode);
       return response.data;
     } catch (error) {
       const message =
@@ -171,6 +177,11 @@ const classSlice = createSlice({
       state.joinClassesLoading = false;
       state.joinClassesError = null;
       state.joinClassesSuccess = false;
+    },
+    joinClassReset: (state) => {
+      state.joinClassLoading = false;
+      state.joinClassError = null;
+      state.joinClassSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -256,7 +267,7 @@ const classSlice = createSlice({
       .addCase(getJoinedClasses.fulfilled, (state, action) => {
         state.joinClassesLoading = false;
         state.joinClassesSuccess = true;
-        state.joinedClasses = action.payload.data;
+        state.joinedClasses = action.payload;
       })
       .addCase(getJoinedClasses.rejected, (state, action) => {
         state.joinClassesLoading = false;
@@ -284,21 +295,18 @@ const classSlice = createSlice({
 
       // Join Class
       .addCase(joinClass.pending, (state) => {
-        state.isLoading = true;
-        state.isSuccess = false;
-        state.isError = false;
-        state.message = "";
+        state.joinClassLoading = true;
+        state.joinClassSuccess = false;
+        state.joinClassError = null;
       })
       .addCase(joinClass.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.classes.push(action.payload.data);
-        state.message = "Joined class successfully";
+        state.joinClassLoading = false;
+        state.joinClassSuccess = true;
+        state.joinedClass = action.payload;
       })
       .addCase(joinClass.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.joinClassLoading = false;
+        state.joinClassError = action.payload;
       })
 
       // Delete Class
@@ -324,7 +332,12 @@ const classSlice = createSlice({
   },
 });
 
-export const { resetCreateClass, reset, resetJoinClasses, classDetailsReset } =
-  classSlice.actions;
+export const {
+  resetCreateClass,
+  reset,
+  resetJoinClasses,
+  classDetailsReset,
+  joinClassReset,
+} = classSlice.actions;
 
 export default classSlice.reducer;

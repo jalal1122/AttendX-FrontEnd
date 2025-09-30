@@ -13,17 +13,17 @@ const Router = () => {
     <Routes>
       <Route path="/" element={user ? <LandingPage /> : <RegisterStudent />} />
 
-      <Route path="/register/admin" element={<RegisterAdmin />} />
+      <Route path="/register/admin" element={!user && <RegisterAdmin />} />
 
-      <Route path="/register/teacher" element={<RegisterTeacher />} />
+      <Route path="/register/teacher" element={!user && <RegisterTeacher />} />
 
-      <Route path="/register/student" element={<RegisterStudent />} />
+      <Route path="/register/student" element={!user && <RegisterStudent />} />
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={!user && <Login />} />
 
-      <Route path="/class/:classCode" element={<Class />} />
+      <Route path="/class/:classCode" element={user ? <Class /> : <Login />} />
 
-      <Route path="*" element={<Login />} />
+      <Route path="*" element={<LandingPage />} />
     </Routes>
   );
 };
