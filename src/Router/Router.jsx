@@ -7,6 +7,8 @@ import Class from "../pages/Class";
 import LandingPage from "../pages/LandingPage";
 import Session from "../pages/Session";
 import useAuth from "../Hooks/useAuth";
+import Profile from "../pages/Profile";
+import GotoLogin from "../Hooks/GotoLogin";
 
 const Router = () => {
   const { isLoggedIn } = useAuth();
