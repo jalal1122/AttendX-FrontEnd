@@ -5,6 +5,7 @@ import { userService } from "./userService.js";
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   role: (JSON.parse(localStorage.getItem("user")) || {})?.role || null,
+  isLoggedIn: !!JSON.parse(localStorage.getItem("user")),
   isError: false,
   isLoading: false,
   isSuccess: false,

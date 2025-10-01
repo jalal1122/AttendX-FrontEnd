@@ -5,26 +5,30 @@ import RegisterStudent from "../pages/RegisterStudent";
 import Login from "../pages/Login";
 import Class from "../pages/Class";
 import LandingPage from "../pages/LandingPage";
-import { useSelector } from "react-redux";
-import  Session  from "../pages/Session";
+import Session from "../pages/Session";
+import useAuth from "../Hooks/useAuth";
 
 const Router = () => {
-  const { user } = useSelector((state) => state.user);
+  const { isLoggedIn } = useAuth();
+
   return (
     <Routes>
-      <Route path="/" element={user ? <LandingPage /> : <RegisterStudent />} />
+      <Route path="/" element={isLoggedIn ? <LandingPage /> : <RegisterStudent />} />
 
-      <Route path="/register/admin" element={!user && <RegisterAdmin />} />
+      <Route path="/register/admin" element={!isLoggedIn && <RegisterAdmin />} />
 
-      <Route path="/register/teacher" element={!user && <RegisterTeacher />} />
+      <Route path="/register/teacher" element={!isLoggedIn && <RegisterTeacher />} />
 
-      <Route path="/register/student" element={!user && <RegisterStudent />} />
+      <Route path="/register/student" element={!isLoggedIn && <RegisterStudent />} />
 
-      <Route path="/login" element={!user && <Login />} />
+      <Route path="/login" element={!isLoggedIn && <Login />} />
 
-      <Route path="/class/:classCode" element={user ? <Class /> : <Login />} />
+      <Route path="/class/:classCode" element={isLoggedIn ? <Class /> : <Login />} />
 
-      <Route path="/class/:classCode/session" element={user ? <Session /> : <Login />} />
+      <Route
+        path="/class/:classCode/session"
+        element={isLoggedIn ? <Session /> : <Login />}
+      />
 
       <Route path="*" element={<LandingPage />} />
     </Routes>
