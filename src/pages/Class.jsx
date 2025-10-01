@@ -141,7 +141,7 @@ const Class = () => {
                   </span>
                 </div>
                 {isTeacher && (
-                  <Link to="/session">
+                  <Link to="./session">
                   <button
                     className="rounded-xl px-6 py-3 font-semibold text-sm shadow hover:scale-105 active:scale-95 transition"
                     style={{

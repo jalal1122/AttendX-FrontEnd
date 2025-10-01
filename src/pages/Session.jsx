@@ -2,13 +2,26 @@ import QRCode from "react-qr-code";
 import { useSelector } from "react-redux";
 import { FiClock, FiActivity } from "react-icons/fi";
 import Navbar from "../Components/Navbar/Navbar";
+import RightSideNav from "../Components/Navbar/RightSideNav";
+import LightDarkTheme from "../Components/Navbar/LightDarkTheme";
 
 export const Session = () => {
   const { colors } = useSelector((state) => state.color);
 
   return (
     <>
-    <Navbar />
+    {/* Logo */}
+    <h1 className="fixed top-4 left-6 text-3xl font-bold flex z-50" style={{
+      color: colors.Text.Primary,
+    }}>
+      Attend <span className="" style={{color: colors.Primary}}>X</span>
+    </h1>
+
+    {/* Right Side Icons */}
+    <div className="fixed top-4 right-6 z-50">
+    <LightDarkTheme iconSize={32} />
+    </div>
+
       <div
         className="min-h-screen flex flex-col items-center justify-between p-6"
         style={{ backgroundColor: colors.Secondary }}
@@ -48,7 +61,7 @@ export const Session = () => {
         {/* QR Code */}
         <div className="flex-1 flex items-center justify-center w-full">
           <div
-            className="p-8 md:p-12 rounded-3xl shadow-xl border flex flex-col items-center max-w-md w-full"
+            className="p-2 md:p-4 rounded-3xl shadow-xl border flex flex-col items-center max-w-md w-full"
             style={{
               backgroundColor: colors.Background,
               borderColor: colors.Secondary,
@@ -83,15 +96,15 @@ export const Session = () => {
         </div>
 
         {/* End Button */}
-        <div className="flex gap-4 mt-8">
+        {/* <div className="flex gap-4 mt-8">
           <button className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 active:scale-95 transition-all duration-200">
             End Session
           </button>
-        </div>
+        </div> */}
 
         {/* Floating Notification (Demo) */}
         <div
-          className="absolute bottom-4 right-6 p-4 rounded-2xl shadow-xl border max-w-sm z-50"
+          className="fixed bottom-4 right-6 p-4 rounded-2xl shadow-xl border max-w-sm z-50"
           style={{
             backgroundColor: colors.Background,
             borderColor: colors.Primary,
